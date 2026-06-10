@@ -1,0 +1,9 @@
+**/.DS_Store
+**/.vscode
+**/.env.prod
+**/.env
+**/.secrets.prod
+**/.secrets
+**/.credentials.json
+**/__marimo__
+**/__pycache__
