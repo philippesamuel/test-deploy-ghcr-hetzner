@@ -43,6 +43,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Place executables in the environment at the front of the path
 ENV PATH="/app/.venv/bin:$PATH"
 
+ENV PYTHONPATH="/app/"
+
 # Reset the entrypoint, don't invoke `uv`
 ENTRYPOINT []
 
@@ -59,5 +61,5 @@ CMD ["fastapi", "dev", "/app/.src/main.py", "--host", "0.0.0.0", "--port", "8000
 # Prod — no dev deps, no volume mount
 # ──────────────────────────────────────────
 FROM base AS prod
-CMD ["uv", "run", "fastapi", "run", "/app/.src/main.py", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["fastapi", "run", "/app/.src/main.py", "--host", "0.0.0.0", "--port", "8000"]
 
