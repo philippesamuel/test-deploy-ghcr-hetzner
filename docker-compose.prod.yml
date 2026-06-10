@@ -1,0 +1,15 @@
+services:
+  backend:
+    image: ghcr.io/${GITHUB_REPOSITORY}/backend:latest
+    build:
+      target: prod
+    restart: unless-stopped
+    labels:
+      caddy_0: api.test-deploy.philippecosta.de
+      caddy_0.reverse_proxy: "{{upstreams 8000}}"
+    networks:
+      - web_proxy
+
+networks:
+  web_proxy:
+    external: true
