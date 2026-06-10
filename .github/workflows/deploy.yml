@@ -29,6 +29,16 @@ jobs:
             ghcr.io/${{ github.repository }}/backend:latest
             ghcr.io/${{ github.repository }}/backend:${{ github.sha }}
       
+      - name: Copy docker-compose file to server
+        uses: appleboy/scp-action@v1
+        with:
+          port: ${{ secrets.HETZNER_SSH_PORT }}
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          source: "docker-compose.prod.yml"
+          target: "/home/deploy/test-deploy-ghcr-hetzner/"
+
       - name: Deploy to Hetzner
         uses: appleboy/ssh-action@v1
         env:
