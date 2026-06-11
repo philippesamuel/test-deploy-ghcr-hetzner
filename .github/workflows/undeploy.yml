@@ -1,0 +1,21 @@
+name: Undeploy
+
+on: workflow_dispatch
+jobs:
+  undeploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Undeploy running services in Hetzner
+        uses: appleboy/ssh-action@v1
+        env:
+          GITHUB_REPOSITORY: ${{ github.repository }}
+        with:
+          port: ${{ secrets.HETZNER_SSH_PORT }}
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          envs: GITHUB_REPOSITORY
+          script: |
+            # GITHUB_REPOSITORY is consumed by docker-compose.prod.yml (image reference)
+            cd /home/deploy/test-deploy-ghcr-hetzner
+            docker compose -f docker-compose.prod.yml down

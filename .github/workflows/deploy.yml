@@ -50,7 +50,9 @@ jobs:
           key: ${{ secrets.HETZNER_SSH_KEY }}
           envs: GITHUB_REPOSITORY
           script: |
+            # GITHUB_REPOSITORY is consumed by docker-compose.prod.yml (image reference)
             cd /home/deploy/test-deploy-ghcr-hetzner
             echo "${{ secrets.GHCR_TOKEN }}" | docker login -u ${{ github.actor }} --password-stdin ghcr.io
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
+      
