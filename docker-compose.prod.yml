@@ -7,6 +7,7 @@ services:
     labels:
       caddy_0: api-test-deploy.philippecosta.de
       caddy_0.reverse_proxy: "{{upstreams 8000}}"
+      caddy_0.reverse_proxy.flush_interval: "-1"
     networks:
       - web_proxy
 
